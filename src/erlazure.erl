@@ -40,7 +40,9 @@
 -behaviour(gen_server).
 
 %% API
--export([start/2]).
+-export([start/2
+        ,start_link/2, start_link/3
+        ]).
 
 %% Queue API
 -export([list_queues/1, list_queues/2, list_queues/3]).
@@ -87,6 +89,16 @@
 -spec start(string(), string()) -> {ok, pid()}.
 start(Account, Key) ->
         gen_server:start_link(?MODULE, {Account, Key}, []).
+
+-spec start_link(string(), string()) -> {ok, pid()}.
+start_link(Account, Key) ->
+        gen_server:start_link(?MODULE, {Account, Key}, []).
+
+-type server() :: {local, Name :: atom()} | {global, GlobalName :: term()} | {via, Module :: atom() , ViaName :: term()}.
+
+-spec start_link(server(), string(), string()) -> {ok, pid()}.
+start_link(Name, Account, Key) ->
+        gen_server:start_link(Name, ?MODULE, {Account, Key}, []).
 
 %%====================================================================
 %% Queue
