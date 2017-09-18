@@ -142,7 +142,9 @@
                        content_type = "application/xml" :: string(),
                        content_length = 0 :: non_neg_integer(),
                        body = "" :: string() | binary(),
-                       headers = [] :: list(request_header()) }).
+                       headers = [] :: list(request_header()),
+                       params = [] :: list()
+                     }).
 -type req_context() :: #req_context{}.
 -export_type([req_context/0]).
 
